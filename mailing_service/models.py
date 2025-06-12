@@ -76,10 +76,10 @@ class Mailing(models.Model):
         null=True,
         on_delete=models.SET_NULL,
     )
-    client = models.ManyToManyField(
+    clients = models.ManyToManyField(
         Client,
-        verbose_name="Клиент",
-        help_text="Укажите клиента",
+        verbose_name="Клиенты",
+        help_text="Укажите клиентов рассылки",
         blank=True,
     )
     owner = models.ForeignKey(

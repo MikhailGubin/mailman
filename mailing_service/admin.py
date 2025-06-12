@@ -21,5 +21,5 @@ class MessageAdmin(ModelAdmin):
 @admin.register(Mailing)
 class MailingAdmin(ModelAdmin):
     list_display = ["status", "message", "owner"]
-    list_filter = ("status", "message", "client", "owner")
-    search_fields = ("status", "message", "client", "owner")
+    list_filter = ("status", "message", "clients", "owner")
+    search_fields = ("status", "message", "clients", "owner")
