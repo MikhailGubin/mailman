@@ -7,6 +7,12 @@ from mailing_service.forms import ClientForm, MessageForm, MailingForm
 from mailing_service.models import Client, Message, Mailing
 
 
+class IndexView(ListView):
+    """Класс для представления 'Главной страницы'"""
+    model = Mailing
+    context_object_name = "mailings"
+    template_name = "mailing_service/index.html"
+
 class ClientListView(ListView):
     """Класс для представления объектов класса 'Клиент'"""
 

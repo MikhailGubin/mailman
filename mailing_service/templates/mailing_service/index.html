@@ -1,0 +1,19 @@
+{% extends 'mailing_service/base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form class="row" method="post" enctype="multipart/form-data" action="">
+                <div class="card">
+                    <p class="card-text">Общее количество рассылок: {{mailing.all}}</p>
+                    <p class="card-text">Общее количество активных рассылок: {{mailing.all}}</p>
+                    <p class="card-text">Общее количество уникальных получателей: {{mailing.clients.all}}</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
