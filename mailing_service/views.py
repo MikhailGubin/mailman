@@ -3,8 +3,8 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from mailing_service.forms import ClientForm
-from mailing_service.models import Client
+from mailing_service.forms import ClientForm, MessageForm
+from mailing_service.models import Client, Message
 
 
 class ClientListView(ListView):
@@ -45,3 +45,43 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Client
     success_url = reverse_lazy("mailing_service:clients_list")
+
+
+class MessageListView(ListView):
+    """Класс для представления объектов класса 'Сообщение'"""
+
+    model = Message
+    context_object_name = "messages"
+
+class MessageDetailView(LoginRequiredMixin, DetailView):
+    """Выводит представление отдельного объекта класса 'Сообщение'"""
+
+    model = Message
+    context_object_name = "message"
+
+
+class MessageCreateView(LoginRequiredMixin, CreateView):
+    """Создаёт представление объекта класса 'Сообщение'"""
+
+    model = Message
+    form_class = MessageForm
+    success_url = reverse_lazy("mailing_service:messages_list")
+
+
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
+    """Создаёт представление объекта класса 'Сообщение'"""
+
+    model = Message
+    form_class = MessageForm
+    success_url = reverse_lazy("mailing_service:messages_list")
+
+    def get_success_url(self):
+        """Перенаправляет пользователя на просмотр этого клиента после успешного редактирования записи"""
+        return reverse("mailing_service:message_detail", args=[self.kwargs.get("pk")])
+
+
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
+    """Удаляет представление объекта класса 'Сообщение'"""
+
+    model = Message
+    success_url = reverse_lazy("mailing_service:messages_list")
