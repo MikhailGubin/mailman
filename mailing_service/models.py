@@ -5,13 +5,13 @@ from users.models import User
 
 
 class Client(models.Model):
-    """Модель 'Получатель рассылки'"""
+    """Модель 'Клиент'"""
 
     email = models.EmailField(unique=True, verbose_name="Email")
     full_name = models.CharField(
         max_length=150,
         verbose_name="Ф.И.О.",
-        help_text="Введите полное Ф.И.О. получателя рассылки",
+        help_text="Введите полное Ф.И.О. клиента",
     )
     comment = models.TextField(
         verbose_name="Комментарий",
@@ -24,8 +24,8 @@ class Client(models.Model):
         return self.full_name
 
     class Meta:
-        verbose_name = "Получатель рассылки"
-        verbose_name_plural = "Получатели рассылки"
+        verbose_name = "клиент"
+        verbose_name_plural = "клиенты"
         ordering = ["full_name"]
 
 
@@ -51,7 +51,7 @@ class Message(models.Model):
         ordering = ["title"]
 
 
-class Mailings(models.Model):
+class Mailing(models.Model):
     """Модель 'Рассылка'"""
 
     STATUS_OPTIONS = (
@@ -78,8 +78,8 @@ class Mailings(models.Model):
     )
     client = models.ManyToManyField(
         Client,
-        verbose_name="Получатель рассылки",
-        help_text="Укажите получателя рассылки",
+        verbose_name="Клиент",
+        help_text="Укажите клиента",
         blank=True,
     )
     owner = models.ForeignKey(
@@ -95,6 +95,6 @@ class Mailings(models.Model):
         return f"Рассылка создана {self.created_at} автором - {self.owner} "
 
     class Meta:
-        verbose_name = "сообщение"
-        verbose_name_plural = "сообщения"
+        verbose_name = "рассылка"
+        verbose_name_plural = "рассылки"
         ordering = ["created_at", "updated_at", "status", "owner", "message"]

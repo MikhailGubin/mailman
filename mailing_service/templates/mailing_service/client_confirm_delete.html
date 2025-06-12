@@ -1,0 +1,26 @@
+{% extends 'mailing_service/base.html' %}
+
+{% block title %}Подтверждение удаления клиента{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form class="row" method="post" enctype="multipart/form-data" action="">
+                <div class="card">
+                    <p class="card-text">Вы уверены, что хотите удалить "{{object.full_name}}"?</p>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <div>
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                            <a class="btn btn-outline-secondary" href="{% url 'catalog:clients_list' %}"
+                               role="button"> Назад </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
