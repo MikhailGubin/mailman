@@ -5,7 +5,6 @@ from django.views.decorators.cache import cache_page
 
 from users.apps import UsersConfig
 
-
 app_name = UsersConfig.name
 
 urlpatterns = [
