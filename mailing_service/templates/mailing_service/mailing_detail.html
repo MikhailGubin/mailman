@@ -34,6 +34,11 @@
                 </div>
             </div>
         </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <a class="btn btn-outline-primary btn-sm"
+               href="{% url 'mailing_service:send_message' mailing.pk %}"
+               role="button"> Начать рассылку клиентам </a>
+        </div>
     </div>
 </div>
 

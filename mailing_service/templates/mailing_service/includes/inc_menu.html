@@ -9,9 +9,10 @@
                     <ul class="list-unstyled">
                         <li><a href="{% url 'mailing_service:clients_list' %}" class="text-white">Главная</a></li>
                         <li><a href="{% url 'mailing_service:clients_list' %}" class="text-white">Клиенты</a></li>
+                        <li><a href="{% url 'mailing_service:messages_list' %}" class="text-white">Сообщения</a></li>
                         {% if user.is_authenticated %}
-                        <li><a href="{% url 'mailing_service:client_create' %}" class="text-white">Добавить клиента</a></li>
-                        <li><a href="{% url 'mailing_service:client_create' %}" class="text-white">Добавить клиента</a></li>
+                        <li><a href="{% url 'mailing_service:mailings_list' %}" class="text-white">Рассылки</a></li>
+                        <li><a href="{% url 'mailing_service:mailing_create' %}" class="text-white">Добавить рассылку</a></li>
                         <li><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
                         {% else %}
                         <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>

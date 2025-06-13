@@ -1,8 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from config.settings import EMAIL_HOST_USER
 from mailing_service.forms import ClientForm, MessageForm, MailingForm
 from mailing_service.models import Client, Message, Mailing
 
@@ -12,6 +15,18 @@ class IndexView(ListView):
     model = Mailing
     context_object_name = "mailings"
     template_name = "mailing_service/index.html"
+
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update({
+            'clients': Client.objects.all(),
+            # 'messages': Message.objects.filter(user=self.request.user),
+            'messages': Message.objects.all(),
+            'mailings': Mailing.objects.all(),
+        })
+        return ctx
+
 
 class ClientListView(ListView):
     """Класс для представления объектов класса 'Клиент'"""
@@ -131,3 +146,28 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Mailing
     success_url = reverse_lazy("mailing_service:mailings_list")
+
+
+class SendMessageView(UpdateView):
+    """ Отправляет сообщения на почту клиентов """
+
+    model = Mailing
+    form_class = MailingForm
+    success_url = reverse_lazy("mailing_service:mailings_list")
+    template_name = "mailing_service/confirm_send_message.html"
+
+    def form_valid(self, form):
+        mailing = form.save()
+        title = mailing.message.title
+        content = mailing.message.content
+        clients = [client.email for client in mailing.clients.all()]
+
+        for client in clients:
+            send_mail(
+                subject=title,
+                message=content,
+                from_email=EMAIL_HOST_USER,
+                recipient_list=[client, ],
+            )
+
+        return super().form_valid(form)
