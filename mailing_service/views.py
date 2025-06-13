@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from config.settings import EMAIL_HOST_USER
 from mailing_service.forms import ClientForm, MessageForm, MailingForm
-from mailing_service.models import Client, Message, Mailing
+from mailing_service.models import Client, Message, Mailing, AttemptMailing
 from mailing_service.services import MailingService
 
 
@@ -161,3 +161,11 @@ class SendMessageView(UpdateView):
         mailing = form.save()
         MailingService.start_mailing(mailing)
         return super().form_valid(form)
+
+
+class AttemptMailingListView(ListView):
+    """Класс для представления объектов класса 'Попытка рассылки'"""
+
+    model = AttemptMailing
+    context_object_name = "attempts"
+    template_name = "mailing_service/attempt_list.html"
