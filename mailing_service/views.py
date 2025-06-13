@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from config.settings import EMAIL_HOST_USER
 from mailing_service.forms import ClientForm, MessageForm, MailingForm
 from mailing_service.models import Client, Message, Mailing
+from mailing_service.services import MailingService
 
 
 class IndexView(ListView):
@@ -158,16 +159,5 @@ class SendMessageView(UpdateView):
 
     def form_valid(self, form):
         mailing = form.save()
-        title = mailing.message.title
-        content = mailing.message.content
-        clients = [client.email for client in mailing.clients.all()]
-
-        for client in clients:
-            send_mail(
-                subject=title,
-                message=content,
-                from_email=EMAIL_HOST_USER,
-                recipient_list=[client, ],
-            )
-
+        MailingService.start_mailing(mailing)
         return super().form_valid(form)

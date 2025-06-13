@@ -98,3 +98,32 @@ class Mailing(models.Model):
         verbose_name = "рассылка"
         verbose_name_plural = "рассылки"
         ordering = ["created_at", "updated_at", "status", "owner", "message"]
+
+
+class AttemptMailing(models.Model):
+    """Модель 'Попытка рассылки'"""
+    STATUS_OPTIONS = (
+        ("successfully", "Успешно"),
+        ("unsuccessfully", "Не успешно"),
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата регистрации продукта",
+    )
+    status = models.CharField(max_length=15, choices=STATUS_OPTIONS, default="successfully")
+    server_response = models.TextField(
+        verbose_name="Ответ почтового сервера",
+        blank=True,
+        null=True,
+    )
+    mailing = models.ForeignKey(
+        Mailing,
+        verbose_name="Рассылка",
+        help_text="Укажите рассылку",
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        verbose_name = "попытка рассылки"
+        verbose_name_plural = "попытки рассылки"
+        ordering = ["created_at", "mailing", "status", "server_response"]
