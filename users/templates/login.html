@@ -1,25 +1,14 @@
-{% extends 'mailing_service/base.html' %}
+{% extends 'users/base_users.html' %}
 
 {% block title %}Авторизация пользователя{% endblock %}
 
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <form class="row" method="post" enctype="multipart/form-data" action="">
-                <div class="card">
-                    <div class="card-body">
-                        {% csrf_token %}
-                        {{form.as_p}}
-                        <div>
-                            <button type="submit" class="btn btn-primary">
-                                Войти
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+{% block user_content %}
+{% csrf_token %}
+{{form.as_p}}
+<div>
+    <button type="submit" class="btn btn-primary">Войти</button>
+    <p><a class="btn btn-outline-secondary btn-sm"
+          href="{% url 'users:password_reset' %}"
+          role="button">Забыли Ваш пароль?</a></p>
 </div>
 {% endblock %}

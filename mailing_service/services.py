@@ -25,22 +25,22 @@ class MailingService:
                     subject=title,
                     message=content,
                     from_email=EMAIL_HOST_USER,
-                    recipient_list=[client, ],
+                    recipient_list=[
+                        client,
+                    ],
                 )
 
             except Exception as error_text:
                 print(str(error_text))
                 mailing_attempt = AttemptMailing.objects.create(
-                    status="unsuccessfully",
-                    server_response=error_text,
-                    mailing=mailing
+                    status="unsuccessfully", server_response=error_text, mailing=mailing
                 )
                 mailing_attempt.save()
+                mailing.status = "completed"
+                mailing.save()
 
+            #Если рассылка выполнилась удачно, то выполняется следующий код
             mailing_attempt = AttemptMailing.objects.create(
-                status = "successfully",
-                mailing = mailing
+                status="successfully", mailing=mailing
             )
             mailing_attempt.save()
-
-

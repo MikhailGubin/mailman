@@ -1,12 +1,12 @@
+
 {% extends 'mailing_service/base.html' %}
 
-{% block title %}Список сообщений{% endblock %}
+{% block title %}Детали попытки рассылки{% endblock %}
 
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for attempt in attempts %}
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -14,16 +14,19 @@
                         <p class="card-text">{{attempt.created_at|date:"H:i:s d M Y"}}</p>
                         <p class="card-text">Статус попытки рассылки: {{attempt.get_status_display}}</p>
                         <p class="card-text">Автор попытки рассылки: {{attempt.mailing.owner}}</p>
+                        {% if attempt.server_response %}
+                        <p class="card-text">Ответ почтового сервера: {{attempt.server_response|truncatechars:37}}</p>
+                        {% endif %}
                         <div class="d-flex justify-content-between align-items-center">
                                 <a class="btn btn-outline-primary btn-sm"
-                                   href="{% url 'mailing_service:attempt_detail' attempt.pk %}"
-                                   role="button"> Подробнее </a>
+                                   href="{% url 'mailing_service:attempt_list' %}"
+                                   role="button"> Назад </a>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>
+
 {% endblock %}

@@ -1,15 +1,15 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
-from django.views.decorators.cache import cache_page
 
 from mailing_service.apps import MailingServiceConfig
-from mailing_service.views import (
-    IndexView, SendMessageView,
-    ClientListView, ClientDetailView, ClientCreateView, ClientUpdateView, ClientDeleteView,
-    MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView,
-    MailingListView, MailingDetailView, MailingCreateView, MailingUpdateView, MailingDeleteView, AttemptMailingListView,
-)
+from mailing_service.views import (AttemptMailingListView, ClientCreateView,
+                                   ClientDeleteView, ClientDetailView,
+                                   ClientListView, ClientUpdateView, IndexView,
+                                   MailingCreateView, MailingDeleteView,
+                                   MailingDetailView, MailingListView,
+                                   MailingUpdateView, MessageCreateView,
+                                   MessageDeleteView, MessageDetailView,
+                                   MessageListView, MessageUpdateView,
+                                   SendMessageView, AttemptMailingDetailView)
 
 app_name = MailingServiceConfig.name
 
@@ -24,12 +24,19 @@ urlpatterns = [
     path("message/<int:pk>/", MessageDetailView.as_view(), name="message_detail"),
     path("message/new/", MessageCreateView.as_view(), name="message_create"),
     path("message/<int:pk>/edit/", MessageUpdateView.as_view(), name="message_edit"),
-    path("message/<int:pk>/delete/", MessageDeleteView.as_view(), name="message_delete"),
+    path(
+        "message/<int:pk>/delete/", MessageDeleteView.as_view(), name="message_delete"
+    ),
     path("mailings/", MailingListView.as_view(), name="mailings_list"),
     path("mailing/<int:pk>/", MailingDetailView.as_view(), name="mailing_detail"),
     path("mailing/new/", MailingCreateView.as_view(), name="mailing_create"),
     path("mailing/<int:pk>/edit/", MailingUpdateView.as_view(), name="mailing_edit"),
-    path("mailing/<int:pk>/delete/", MailingDeleteView.as_view(), name="mailing_delete"),
-    path("mailing/<int:pk>/send_message/", SendMessageView.as_view(), name="send_message"),
+    path(
+        "mailing/<int:pk>/delete/", MailingDeleteView.as_view(), name="mailing_delete"
+    ),
+    path(
+        "mailing/<int:pk>/send_message/", SendMessageView.as_view(), name="send_message"
+    ),
     path("attempts/", AttemptMailingListView.as_view(), name="attempt_list"),
+    path("attempt/<int:pk>/", AttemptMailingDetailView.as_view(), name="attempt_detail"),
 ]

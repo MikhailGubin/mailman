@@ -1,6 +1,6 @@
 from django import forms
 
-from mailing_service.models import Client, Message, Mailing
+from mailing_service.models import Client, Mailing, Message
 from mixin_form import StyleFormMixin
 
 
@@ -22,4 +22,4 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Mailing
-        fields = "__all__"
+        exclude = ("finished_at",)

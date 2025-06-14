@@ -1,4 +1,5 @@
 {% extends 'mailing_service/base.html' %}
+{% load unique_count %}<!-- Загрузка пользовательского фильтра -->
 
 {% block title %}Главная страница{% endblock %}
 
@@ -8,9 +9,9 @@
         <div class="col">
             <form class="row" method="post" enctype="multipart/form-data" action="">
                 <div class="card">
-                    <p class="card-text">Общее количество рассылок: {{clients}}</p>
-                    <p class="card-text">Общее количество активных рассылок: {{messages}}</p>
-                    <p class="card-text">Общее количество уникальных получателей: {{mailings}}</p>
+                    <h3 class="fw-light">Общее количество рассылок: {{mailings | length}}</h3>
+                    <h3 class="fw-light">Общее количество активных рассылок: {{launched_mailings | length}}</h3>
+                    <h3 class="fw-light">Общее количество уникальных получателей: {{clients | unique_count}}</h3>
                 </div>
             </form>
         </div>

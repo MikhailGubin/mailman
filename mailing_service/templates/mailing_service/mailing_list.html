@@ -21,7 +21,7 @@
                     <div class="card-body">
                          <p class="card-text">Дата и время создания рассылки: {{mailing.created_at|date:"H:i:s d M Y"}}</p>
                         <p class="card-text">Автор рассылки: {{mailing.owner}}</p>
-                        <p class="card-text">Статус рассылки: {{mailing.status}}</p>
+                        <p class="card-text">Статус рассылки: {{mailing.get_status_display}}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a class="btn btn-outline-primary btn-sm"

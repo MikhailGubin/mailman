@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import ForeignKey
 
 from users.models import User
 
@@ -61,11 +60,12 @@ class Mailing(models.Model):
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата регистрации продукта",
+        verbose_name="Дата и время создания рассылки",
     )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name="Дата последнего изменения информации о продукте",
+    finished_at = models.DateTimeField(
+        verbose_name="Дата и время окончания рассылки",
+        null=True,
+        blank=True,
     )
     status = models.CharField(max_length=10, choices=STATUS_OPTIONS, default="created")
     message = models.ForeignKey(
@@ -97,20 +97,23 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = "рассылка"
         verbose_name_plural = "рассылки"
-        ordering = ["created_at", "updated_at", "status", "owner", "message"]
+        ordering = ["created_at", "finished_at", "status", "owner", "message"]
 
 
 class AttemptMailing(models.Model):
     """Модель 'Попытка рассылки'"""
+
     STATUS_OPTIONS = (
         ("successfully", "Успешно"),
         ("unsuccessfully", "Не успешно"),
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Дата регистрации продукта",
+        verbose_name="Дата и время попытки рассылки",
     )
-    status = models.CharField(max_length=15, choices=STATUS_OPTIONS, default="successfully")
+    status = models.CharField(
+        max_length=15, choices=STATUS_OPTIONS, default="successfully"
+    )
     server_response = models.TextField(
         verbose_name="Ответ почтового сервера",
         blank=True,

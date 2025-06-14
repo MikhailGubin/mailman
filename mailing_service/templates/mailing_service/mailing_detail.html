@@ -11,12 +11,14 @@
                     <div class="card-body">
                         <p class="card-text">Дата создания рассылки: {{mailing.created_at|date:"H:i:s d M Y"}}</p>
                         <p class="card-text">Автор рассылки: {{mailing.owner}}</p>
-                        <p class="card-text">Статус рассылки: {{mailing.status}}</p>
+                        <p class="card-text">Статус рассылки: {{mailing.get_status_display}}</p>
                         <p class="card-text">Заголовок сообщения: {{mailing.message}}</p>
                         <p class="card-text">Клиенты, которым отправлена рассылка:</p>
-                        {% for client in mailing.clients.all %}
-                            <p class="card-text">{{client}}</p>
-                        {% endfor %}
+                        <ul class="list-unstyled">
+                            {% for client in mailing.clients.all %}
+                                <li>* {{client}}</li>
+                            {% endfor %}
+                        </ul>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a class="btn btn-outline-primary btn-sm"

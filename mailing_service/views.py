@@ -1,32 +1,30 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from config.settings import EMAIL_HOST_USER
-from mailing_service.forms import ClientForm, MessageForm, MailingForm
-from mailing_service.models import Client, Message, Mailing, AttemptMailing
+from mailing_service.forms import ClientForm, MailingForm, MessageForm
+from mailing_service.models import AttemptMailing, Client, Mailing, Message
 from mailing_service.services import MailingService
 
 
 class IndexView(ListView):
     """Класс для представления 'Главной страницы'"""
+
     model = Mailing
     context_object_name = "mailings"
     template_name = "mailing_service/index.html"
 
-
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx.update({
-            'clients': Client.objects.all(),
-            # 'messages': Message.objects.filter(user=self.request.user),
-            'messages': Message.objects.all(),
-            'mailings': Mailing.objects.all(),
-        })
-        return ctx
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                "clients": Client.objects.all(),
+                "launched_mailings": [mailing for mailing in  Mailing.objects.all() if mailing.status == "launched"],
+                "mailings": Mailing.objects.all(),
+            }
+        )
+        return context
 
 
 class ClientListView(ListView):
@@ -34,6 +32,7 @@ class ClientListView(ListView):
 
     model = Client
     context_object_name = "clients"
+
 
 class ClientDetailView(LoginRequiredMixin, DetailView):
     """Выводит представление отдельного объекта класса 'Клиент'"""
@@ -75,6 +74,7 @@ class MessageListView(ListView):
     model = Message
     context_object_name = "messages"
 
+
 class MessageDetailView(LoginRequiredMixin, DetailView):
     """Выводит представление отдельного объекта класса 'Сообщение'"""
 
@@ -115,6 +115,7 @@ class MailingListView(ListView):
     model = Mailing
     context_object_name = "mailings"
 
+
 class MailingDetailView(LoginRequiredMixin, DetailView):
     """Выводит представление отдельного объекта класса 'Рассылка'"""
 
@@ -150,7 +151,7 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class SendMessageView(UpdateView):
-    """ Отправляет сообщения на почту клиентов """
+    """Отправляет сообщения на почту клиентов"""
 
     model = Mailing
     form_class = MailingForm
@@ -169,3 +170,11 @@ class AttemptMailingListView(ListView):
     model = AttemptMailing
     context_object_name = "attempts"
     template_name = "mailing_service/attempt_list.html"
+
+
+class AttemptMailingDetailView(LoginRequiredMixin, DetailView):
+    """Выводит представление отдельного объекта класса 'Попытка рассылки'"""
+
+    model = AttemptMailing
+    context_object_name = "attempt"
+    template_name = "mailing_service/attempt_detail.html"
