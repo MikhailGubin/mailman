@@ -7,7 +7,14 @@
 {{form.as_p}}
 <div>
     <button type="submit" class="btn btn-primary">
+        {% if object %}
+        Сохранить
+        {% else %}
         Зарегистрироваться
+        {% endif %}
+    </button>
+    <button type="submit" class="btn btn-primary" href="{% url 'users:users_list' %}">
+        Назад
     </button>
 </div>
 {% endblock %}

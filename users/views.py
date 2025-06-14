@@ -1,16 +1,17 @@
 import secrets
-
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from config.settings import EMAIL_HOST_USER
 
-from .forms import UserRegisterForm, CustomSetPasswordForm
+from .forms import UserRegisterForm, CustomSetPasswordForm, UserForm
 from .models import User
+from django.views.generic import DetailView, ListView
+
 
 
 class UserCreateView(CreateView):
@@ -44,6 +45,28 @@ def email_verification(request, token):
     user.is_active = True
     user.save()
     return redirect(reverse("users:login"))
+
+
+class UserListView(ListView):
+    """Класс для представления объектов класса 'Пользователь'"""
+
+    model = User
+    context_object_name = "users"
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    """Выводит представление отдельного объекта класса 'Клиент'"""
+
+    model = User
+    context_object_name = "user"
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    """Создаёт представление объекта класса 'Клиент'"""
+
+    model = User
+    form_class = UserForm
+    success_url = reverse_lazy("users:users_list")
 
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):

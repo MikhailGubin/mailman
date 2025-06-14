@@ -12,7 +12,9 @@
                         <li><a href="{% url 'mailing_service:clients_list' %}" class="text-white">Клиенты</a></li>
                         <li><a href="{% url 'mailing_service:messages_list' %}" class="text-white">Сообщения</a></li>
                         <li><a href="{% url 'mailing_service:mailings_list' %}" class="text-white">Рассылки</a></li>
-                        <li><a href="{% url 'mailing_service:attempt_list' %}" class="text-white">Отчеты по рассылкам</a></li>
+                        <li><a href="{% url 'mailing_service:attempt_list' %}" class="text-white">
+                            Отчеты по рассылкам</a></li>
+                        <li><a href="{% url 'users:users_list' %}" class="text-white">Список пользователей</a></li>
                         <li><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
                         {% else %}
                         <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>

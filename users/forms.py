@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
+    """ Форма для регистрации Пользователя """
     class Meta:
         model = User
         fields = ("email", "password1", "password2")
@@ -27,3 +28,10 @@ class CustomSetPasswordForm(SetPasswordForm):
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
     )
+
+
+class UserForm(StyleFormMixin, forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = "__all__"
