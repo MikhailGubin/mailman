@@ -14,14 +14,6 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
         fields = ("email", "password1", "password2")
 
 
-class ManagerForm(forms.ModelForm):
-    """ Форма для блокировки Пользователя """
-
-    class Meta:
-        model = User
-        fields = ("is_active",)
-
-
 # class CustomSetPasswordForm(SetPasswordForm):
 #     """ Переопределяет форму восстановления пароля """
 #

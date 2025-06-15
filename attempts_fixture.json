@@ -1,0 +1,409 @@
+[
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 8,
+    "fields": {
+        "created_at": "2025-06-14T20:08:51.899Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 5,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 9,
+    "fields": {
+        "created_at": "2025-06-14T20:08:51.899Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 5,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 10,
+    "fields": {
+        "created_at": "2025-06-14T20:08:51.899Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 5,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 11,
+    "fields": {
+        "created_at": "2025-06-14T20:08:51.909Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 5,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 12,
+    "fields": {
+        "created_at": "2025-06-14T20:09:03.298Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 13,
+    "fields": {
+        "created_at": "2025-06-14T20:09:03.298Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 14,
+    "fields": {
+        "created_at": "2025-06-14T20:21:12.955Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 15,
+    "fields": {
+        "created_at": "2025-06-14T20:21:12.965Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 16,
+    "fields": {
+        "created_at": "2025-06-14T20:21:28.322Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 17,
+    "fields": {
+        "created_at": "2025-06-14T20:21:28.322Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 18,
+    "fields": {
+        "created_at": "2025-06-14T20:21:48.931Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 19,
+    "fields": {
+        "created_at": "2025-06-14T20:22:46.435Z",
+        "status": "unsuccessfully",
+        "server_response": "{'mikhail-gubin26@ramb': (501, b'5.1.3 Bad recipient address syntax 1749932567-lMQrZQ8LkOs0-84nBO2xm')}",
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 20,
+    "fields": {
+        "created_at": "2025-06-14T20:22:46.437Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 21,
+    "fields": {
+        "created_at": "2025-06-14T20:23:48.951Z",
+        "status": "unsuccessfully",
+        "server_response": "{'mikhail-gubin26@ramb': (501, b'5.1.3 Bad recipient address syntax 1749932629-nNQ6hd9LeeA0-dF4MsZkw')}",
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 22,
+    "fields": {
+        "created_at": "2025-06-14T20:23:48.952Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 23,
+    "fields": {
+        "created_at": "2025-06-14T20:24:11.574Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 24,
+    "fields": {
+        "created_at": "2025-06-14T20:29:39.877Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 25,
+    "fields": {
+        "created_at": "2025-06-14T20:31:30.864Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 26,
+    "fields": {
+        "created_at": "2025-06-14T20:32:16.050Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 27,
+    "fields": {
+        "created_at": "2025-06-14T20:32:39.372Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 5,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 28,
+    "fields": {
+        "created_at": "2025-06-14T20:32:40.046Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 5,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 29,
+    "fields": {
+        "created_at": "2025-06-14T20:32:56.147Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 30,
+    "fields": {
+        "created_at": "2025-06-14T20:32:56.147Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 31,
+    "fields": {
+        "created_at": "2025-06-14T20:35:29.913Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 6,
+        "owner": 7
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 32,
+    "fields": {
+        "created_at": "2025-06-14T20:35:29.913Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 33,
+    "fields": {
+        "created_at": "2025-06-14T20:35:39.145Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 5,
+        "owner": 7
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 34,
+    "fields": {
+        "created_at": "2025-06-14T20:35:39.145Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 5,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 35,
+    "fields": {
+        "created_at": "2025-06-14T20:35:39.155Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 5,
+        "owner": 7
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 36,
+    "fields": {
+        "created_at": "2025-06-14T20:35:39.155Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 5,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 37,
+    "fields": {
+        "created_at": "2025-06-14T20:37:19.802Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 6,
+        "owner": 7
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 38,
+    "fields": {
+        "created_at": "2025-06-14T20:37:19.806Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 39,
+    "fields": {
+        "created_at": "2025-06-14T20:38:17.094Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 6,
+        "owner": 7
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 40,
+    "fields": {
+        "created_at": "2025-06-14T20:38:17.104Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 41,
+    "fields": {
+        "created_at": "2025-06-14T20:39:40.260Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 6,
+        "owner": 7
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 42,
+    "fields": {
+        "created_at": "2025-06-14T20:39:40.270Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 6,
+        "owner": null
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 43,
+    "fields": {
+        "created_at": "2025-06-14T21:35:06.552Z",
+        "status": "unsuccessfully",
+        "server_response": "'str' object has no attribute 'email'",
+        "mailing": 7,
+        "owner": 2
+    }
+},
+{
+    "model": "mailing_service.attemptmailing",
+    "pk": 44,
+    "fields": {
+        "created_at": "2025-06-14T21:35:06.552Z",
+        "status": "successfully",
+        "server_response": null,
+        "mailing": 7,
+        "owner": null
+    }
+}
+]

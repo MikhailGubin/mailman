@@ -11,10 +11,11 @@
                     <p class="card-text">Вы уверены, что хотите отправить письма клиентам?</p>
                     <div class="card-body">
                         {% csrf_token %}
+                        {{ form.non_field_errors }}
                         {{form.as_p}}
                         <div>
                             <button type="submit" class="btn btn-danger">Отправить</button>
-                            <a class="btn btn-outline-secondary" href="{% url 'mailing_service:clients_list' %}"
+                            <a class="btn btn-outline-secondary" href="{% url 'mailing_service:mailings_list' %}"
                                role="button"> Назад </a>
                         </div>
                     </div>

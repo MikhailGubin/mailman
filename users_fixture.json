@@ -1,0 +1,67 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$GX4B3eyYw2w64RhzpslI8e$jReJ84wGQVD3RYZGDRUt6jOIrv5p2r6G02I+r/5dFwo=",
+        "last_login": "2025-06-15T00:22:10.694Z",
+        "is_superuser": true,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-06-12T19:02:22Z",
+        "email": "admin@example.com",
+        "avatar": "users/avatars/avatar.jpg",
+        "phone_number": "+7 777 777 77 77",
+        "country": "Россия",
+        "token": null,
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$NFBJm7S0Cf9LHtY78fu3PW$daZUdmhdHT3dNdhlSGIwOkvFTokNbF4wPKmhL0cAmTw=",
+        "last_login": "2025-06-15T00:07:45Z",
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-06-14T13:50:02Z",
+        "email": "MVGubin1323@yandex.ru",
+        "avatar": "users/avatars/avatar_user.png",
+        "phone_number": null,
+        "country": null,
+        "token": "d34d998de2fdaf0f73bee989a1fddf6f",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$DpuXnoZZAHqlXd5V5vOP49$ow4CDd/HQQKHFR9AWfjSWPYKwh0F4jXw125O5XG9RLc=",
+        "last_login": "2025-06-14T23:33:51.855Z",
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-06-14T18:04:07.229Z",
+        "email": "mikhail-gubin26@rambler.ru",
+        "avatar": "",
+        "phone_number": null,
+        "country": null,
+        "token": "434d7132716eaa450127f048d09f2650",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

@@ -23,7 +23,7 @@ class MailingService:
         for client in clients:
 
             try:
-                if "@test.ru" in client.email:
+                if "@test.ru" in client:
                     raise Exception("Не правильно указана почта клиента")
 
                 send_mail(
@@ -41,28 +41,30 @@ class MailingService:
                     status="unsuccessfully", server_response=error_text, mailing=mailing,
                     owner=user
                 )
+
                 mailing_attempt.save()
+                mailing.finished_at = datetime.datetime.now()
                 mailing.status = "completed"
                 mailing.save()
 
             # Если рассылка выполнилась удачно, то выполняется следующий код
             mailing_attempt = AttemptMailing.objects.create(
-                status="successfully", mailing=mailing
+                status="successfully", mailing=mailing, owner = user
             )
             mailing_attempt.save()
 
     @staticmethod
-    def get_from_cache(custom_model):
+    def get_from_cache(queryset, model):
         """Получает данные по продуктам из кэша. Если кэш пуст, получает данные из БД"""
         if not CACHE_ENABLED:
-            return custom_model.objects.all()
-        key = "operand_list"
-        operands = cache.get(key)
-        if operands is not None:
-            return operands
-        operands = custom_model.objects.all()
-        cache.set(key, operands, 60)
-        return operands
+            return queryset
+        key = str(model) + "_list"
+        objects = cache.get(key)
+        if objects is not None:
+            return objects
+        objects = queryset
+        cache.set(key, objects, 60)
+        return objects
 
 
 class CustomCreateView(LoginRequiredMixin, CreateView):
@@ -87,6 +89,7 @@ class CustomListView(ListView):
         В противном случае выводит только те объекты, которые создал данный Пользователь.
         """
         user = self.request.user
+        get_queryset = super().get_queryset()
         permissions = [user.has_perm("mailing_service.can_view_client"),
                        user.has_perm("mailing_service.can_view_message"),
                        user.has_perm('mailing_service.can_view_mailing'),
@@ -94,6 +97,6 @@ class CustomListView(ListView):
                        user.has_perm('mailing_service.can_view_attempt_mailing')]
 
         if all(permissions):
-            return self.model.objects.all()[0:9]
-
-        return self.model.objects.all().filter(owner=self.request.user)[0:9]
+            return MailingService.get_from_cache(get_queryset, self.model)
+        else:
+            return MailingService.get_from_cache(get_queryset.filter(owner=self.request.user), self.model)

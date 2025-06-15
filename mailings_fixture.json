@@ -1,0 +1,45 @@
+[
+{
+    "model": "mailing_service.mailing",
+    "pk": 5,
+    "fields": {
+        "created_at": "2025-06-14T18:30:09.104Z",
+        "finished_at": null,
+        "status": "completed",
+        "message": 4,
+        "owner": 7,
+        "clients": [
+            4,
+            5
+        ]
+    }
+},
+{
+    "model": "mailing_service.mailing",
+    "pk": 6,
+    "fields": {
+        "created_at": "2025-06-14T18:31:53.536Z",
+        "finished_at": null,
+        "status": "completed",
+        "message": 5,
+        "owner": 7,
+        "clients": [
+            8
+        ]
+    }
+},
+{
+    "model": "mailing_service.mailing",
+    "pk": 7,
+    "fields": {
+        "created_at": "2025-06-14T18:37:32.115Z",
+        "finished_at": null,
+        "status": "completed",
+        "message": 6,
+        "owner": 2,
+        "clients": [
+            7
+        ]
+    }
+}
+]

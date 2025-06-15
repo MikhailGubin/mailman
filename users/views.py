@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from config.settings import EMAIL_HOST_USER
 
-from .forms import UserRegisterForm, UserForm, ManagerForm
+from .forms import UserRegisterForm, UserForm
 from .models import User
 from django.views.generic import DetailView, ListView
 
@@ -78,16 +78,16 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserForm
     success_url = reverse_lazy("users:users_list")
 
-    def get_form_class(self):
-        """ Определяет права доступа для редактирования профиля Пользователя """
-        user = self.request.user
-        user_profile = self.object
-        if user_profile.pk == user.pk:
-            return UserForm
-        elif user.has_perm("users.can_edit_is_active") and user.has_perm("users.can_view_user"):
-            return ManagerForm
-
-        raise PermissionDenied
+    # def get_form_class(self):
+    #     """ Определяет права доступа для редактирования профиля Пользователя """
+    #     user = self.request.user
+    #     user_profile = self.object
+    #     if user_profile.pk == user.pk:
+    #         return UserForm
+    #     elif user.has_perm("users.can_edit_is_active") and user.has_perm("users.can_view_user"):
+    #         return ManagerForm
+    #
+    #     raise PermissionDenied
 
 
 class UserBlockView(LoginRequiredMixin, DeleteView):
