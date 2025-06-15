@@ -6,21 +6,30 @@
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for user in users %}
+            {% for user_profile in users_profile_list %}
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <p class="card-text">Почта: {{user.email}}</p>
-                        <p class="card-text">Телефон: {{user.phone_number}}</p>
-                        <p class="card-text">Страна: {{user.country}}</p>
+                        <p class="card-text">Почта: {{user_profile.email}}</p>
+                        <p class="card-text">Телефон: {{user_profile.phone_number}}</p>
+                        <p class="card-text">Страна: {{user_profile.country}}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a class="btn btn-outline-primary btn-sm"
-                                   href="{% url 'users:user_detail' user.pk %}"
+                                   href="{% url 'users:user_detail' user_profile.pk %}"
                                    role="button"> Подробнее </a>
-                                <a class="btn btn-outline-danger btn-sm"
-                                   href="{% url 'users:user_edit' user.pk %}"
-                                   role="button"> Блокировка пользователя </a>
+
+                                    {% if user_profile.pk == user.pk %}
+                                    <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'users:user_edit' user_profile.pk %}"
+                                   role="button">Редактировать</a>
+                                    {% elif perms.users.can_edit_is_active and perms.users.can_view_user %}
+                                    <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'users:user_block' user_profile.pk %}"
+                                   role="button">Заблокировать</a>
+                                    {% endif %}
+
+
                             </div>
                         </div>
                     </div>

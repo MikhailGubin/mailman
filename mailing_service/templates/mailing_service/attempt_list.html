@@ -3,17 +3,31 @@
 {% block title %}Список сообщений{% endblock %}
 
 {% block content %}
+<section class="py-3 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <div class="card">
+                    <h3 class="fw-light">Количество успешных попыток рассылок:
+                        {{successfully_attempts | length}}</h3>
+                    <h3 class="fw-light">Количество неуспешных попыток рассылок:
+                        {{unsuccessfully_attempts | length}}</h3>
+                    <h3 class="fw-light">Количество отправленных сообщений:
+                        {{attempts_list | length}}</h3>
+                </div>
+            </div>
+        </div>
+</section>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for attempt in attempts %}
+
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <p class="card-text">Дата и время создания попытки рассылки:</p>
                         <p class="card-text">{{attempt.created_at|date:"H:i:s d M Y"}}</p>
                         <p class="card-text">Статус попытки рассылки: {{attempt.get_status_display}}</p>
-                        <p class="card-text">Автор попытки рассылки: {{attempt.mailing.owner}}</p>
                         <div class="d-flex justify-content-between align-items-center">
                                 <a class="btn btn-outline-primary btn-sm"
                                    href="{% url 'mailing_service:attempt_detail' attempt.pk %}"
@@ -22,6 +36,7 @@
                     </div>
                 </div>
             </div>
+
             {% endfor %}
         </div>
     </div>

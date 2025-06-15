@@ -1,14 +1,15 @@
 import secrets
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordResetConfirmView
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from config.settings import EMAIL_HOST_USER
 
-from .forms import UserRegisterForm, CustomSetPasswordForm, UserForm
+from .forms import UserRegisterForm, UserForm, ManagerForm
 from .models import User
 from django.views.generic import DetailView, ListView
 
@@ -51,14 +52,23 @@ class UserListView(ListView):
     """Класс для представления объектов класса 'Пользователь'"""
 
     model = User
-    context_object_name = "users"
+    context_object_name = "users_profile_list"
+
+    def get_queryset(self):
+        """Определяет логику вывода на экран списка Пользователей"""
+
+        user = self.request.user
+        if user.has_perm("users.can_edit_is_active") and user.has_perm("users.can_view_user"):
+            return User.objects.all()
+
+        return User.objects.filter(pk=self.request.user.pk)
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     """Выводит представление отдельного объекта класса 'Клиент'"""
 
     model = User
-    context_object_name = "user"
+    context_object_name = "user_profile"
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -68,7 +78,42 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserForm
     success_url = reverse_lazy("users:users_list")
 
+    def get_form_class(self):
+        """ Определяет права доступа для редактирования профиля Пользователя """
+        user = self.request.user
+        user_profile = self.object
+        if user_profile.pk == user.pk:
+            return UserForm
+        elif user.has_perm("users.can_edit_is_active") and user.has_perm("users.can_view_user"):
+            return ManagerForm
 
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    """ Подтверждение нового пароля """
-    form_class = CustomSetPasswordForm
+        raise PermissionDenied
+
+
+class UserBlockView(LoginRequiredMixin, DeleteView):
+    model = User
+    success_url = reverse_lazy("mailing_service:mailings_list")
+    template_name = "users/confirm_user_block.html"
+
+    def post(self, request, pk):
+        user_to_block = get_object_or_404(User, pk=pk)
+        user = self.request.user
+
+        if not request.user.has_perm("users.can_edit_is_active"):
+            return HttpResponseForbidden(
+                "У вас нет прав для блокировки Пользователя"
+            )
+        elif user.pk == user_to_block.pk:
+            return HttpResponseForbidden(
+                "Нельзя себя заблокировать"
+            )
+
+        user_to_block.is_active = False
+        user_to_block.save()
+
+        return redirect("users:users_list")
+
+
+# class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+#     """ Подтверждение нового пароля """
+#     form_class = CustomSetPasswordForm

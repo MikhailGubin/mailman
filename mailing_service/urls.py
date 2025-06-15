@@ -9,7 +9,8 @@ from mailing_service.views import (AttemptMailingListView, ClientCreateView,
                                    MailingUpdateView, MessageCreateView,
                                    MessageDeleteView, MessageDetailView,
                                    MessageListView, MessageUpdateView,
-                                   SendMessageView, AttemptMailingDetailView)
+                                   SendMessageView, AttemptMailingDetailView,
+                                   MailingCompletedView)
 
 app_name = MailingServiceConfig.name
 
@@ -39,4 +40,6 @@ urlpatterns = [
     ),
     path("attempts/", AttemptMailingListView.as_view(), name="attempt_list"),
     path("attempt/<int:pk>/", AttemptMailingDetailView.as_view(), name="attempt_detail"),
+    path("mailing_completed/<int:pk>/delete/", MailingCompletedView.as_view(), name="mailing_completed")
+
 ]

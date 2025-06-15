@@ -1,14 +1,15 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, \
-    PasswordResetCompleteView
+    PasswordResetCompleteView, PasswordResetConfirmView
 from django.urls import path, reverse_lazy
 
 from users.apps import UsersConfig
-from users.views import UserCreateView, email_verification, CustomPasswordResetConfirmView, UserListView, \
-    UserDetailView, UserUpdateView
+from users.views import UserCreateView, email_verification, UserListView, \
+    UserDetailView, UserUpdateView, UserBlockView
 
 app_name = UsersConfig.name
+
 
 urlpatterns = [
                   path("login/", LoginView.as_view(template_name="login.html"), name="login"),
@@ -17,6 +18,7 @@ urlpatterns = [
                   path("", UserListView.as_view(), name="users_list"),
                   path("<int:pk>/", UserDetailView.as_view(), name="user_detail"),
                   path("<int:pk>/edit/", UserUpdateView.as_view(), name="user_edit"),
+                  path("<int:pk>/user_block/", UserBlockView.as_view(), name="user_block"),
                   path("email-confirm/<str:token>/", email_verification, name="email-confirm"),
                   path('password-reset/',
                        PasswordResetView.as_view(
@@ -29,7 +31,7 @@ urlpatterns = [
                        PasswordResetDoneView.as_view(template_name="users/password_reset_done.html"),
                        name='password_reset_done'),
                   path('password-reset/<uidb64>/<token>/',
-                       CustomPasswordResetConfirmView.as_view(
+                       PasswordResetConfirmView.as_view(
                            template_name="users/password_reset_confirm.html",
                            success_url=reverse_lazy("users:password_reset_complete")
                        ),

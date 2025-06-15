@@ -24,12 +24,19 @@
                                 <a class="btn btn-outline-primary btn-sm"
                                    href="{% url 'mailing_service:mailings_list' %}"
                                    role="button"> Назад </a>
+                                {% if user == mailing.owner %}
                                 <a class="btn btn-outline-secondary btn-sm"
                                    href="{% url 'mailing_service:mailing_edit' mailing.pk %}"
                                    role="button"> Редактировать </a>
                                 <a class="btn btn-outline-danger btn-sm"
                                    href="{% url 'mailing_service:mailing_delete' mailing.pk %}"
                                    role="button"> Удалить </a>
+                                {% endif %}
+                                {% if perms.mailing_service.can_edit_status %}
+                                    <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'mailing_service:mailing_completed' mailing.pk %}"
+                                   role="button"> Отключить </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

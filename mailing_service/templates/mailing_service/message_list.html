@@ -19,20 +19,22 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <p class="card-text">Название сообщения: {{message.title | truncatechars:20}}</p>
-                        <p class="card-text">Описание: {{message.content | truncatechars:37}}</p>
+                        <p class="card-text">Тема: {{message.title | truncatechars:30}}</p>
+                        <p class="card-text">Описание: {{message.content | truncatechars:55}}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
 
                                 <a class="btn btn-outline-primary btn-sm"
                                    href="{% url 'mailing_service:message_detail' message.pk %}"
                                    role="button"> Подробнее </a>
+                                {% if user == message.owner %}
                                 <a class="btn btn-outline-secondary btn-sm"
                                    href="{% url 'mailing_service:message_edit' message.pk %}"
                                    role="button"> Редактировать </a>
                                 <a class="btn btn-outline-danger btn-sm"
                                    href="{% url 'mailing_service:message_delete' message.pk %}"
                                    role="button"> Удалить </a>
+                                {% endif %}
 
                             </div>
                         </div>

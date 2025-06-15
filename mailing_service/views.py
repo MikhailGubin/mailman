@@ -1,11 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from mailing_service.forms import ClientForm, MailingForm, MessageForm
 from mailing_service.models import AttemptMailing, Client, Mailing, Message
-from mailing_service.services import MailingService
+from mailing_service.services import MailingService, CustomCreateView, CustomListView
 
 
 class IndexView(ListView):
@@ -27,7 +29,7 @@ class IndexView(ListView):
         return context
 
 
-class ClientListView(ListView):
+class ClientListView(CustomListView):
     """Класс для представления объектов класса 'Клиент'"""
 
     model = Client
@@ -41,7 +43,7 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "client"
 
 
-class ClientCreateView(LoginRequiredMixin, CreateView):
+class ClientCreateView(CustomCreateView):
     """Создаёт представление объекта класса 'Клиент'"""
 
     model = Client
@@ -68,7 +70,7 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("mailing_service:clients_list")
 
 
-class MessageListView(ListView):
+class MessageListView(CustomListView):
     """Класс для представления объектов класса 'Сообщение'"""
 
     model = Message
@@ -82,7 +84,7 @@ class MessageDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "message"
 
 
-class MessageCreateView(LoginRequiredMixin, CreateView):
+class MessageCreateView(CustomCreateView):
     """Создаёт представление объекта класса 'Сообщение'"""
 
     model = Message
@@ -109,7 +111,7 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("mailing_service:messages_list")
 
 
-class MailingListView(ListView):
+class MailingListView(CustomListView):
     """Класс для представления объектов класса 'Сообщение'"""
 
     model = Mailing
@@ -123,7 +125,7 @@ class MailingDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "mailing"
 
 
-class MailingCreateView(LoginRequiredMixin, CreateView):
+class MailingCreateView(CustomCreateView):
     """Создаёт представление объекта класса 'Рассылка'"""
 
     model = Mailing
@@ -160,16 +162,36 @@ class SendMessageView(UpdateView):
 
     def form_valid(self, form):
         mailing = form.save()
-        MailingService.start_mailing(mailing)
+        MailingService.start_mailing(mailing, self.request.user)
         return super().form_valid(form)
 
 
-class AttemptMailingListView(ListView):
+class AttemptMailingListView(CustomListView):
     """Класс для представления объектов класса 'Попытка рассылки'"""
 
     model = AttemptMailing
     context_object_name = "attempts"
     template_name = "mailing_service/attempt_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        if user.has_perm('mailing_service.can_view_attempt_mailing'):
+            attempts_list = AttemptMailing.objects.all()
+        else:
+            attempts_list = [attempt for attempt in AttemptMailing.objects.all()
+                             if attempt.owner == user]
+
+        context.update(
+            {
+                "attempts_list": attempts_list,
+                "successfully_attempts": [attempt for attempt in attempts_list
+                                          if attempt.status == "successfully"],
+                "unsuccessfully_attempts": [attempt for attempt in attempts_list
+                                          if attempt.status == "unsuccessfully"],
+            }
+        )
+        return context
 
 
 class AttemptMailingDetailView(LoginRequiredMixin, DetailView):
@@ -178,3 +200,22 @@ class AttemptMailingDetailView(LoginRequiredMixin, DetailView):
     model = AttemptMailing
     context_object_name = "attempt"
     template_name = "mailing_service/attempt_detail.html"
+
+
+class MailingCompletedView(LoginRequiredMixin, DeleteView):
+    model = Mailing
+    success_url = reverse_lazy("mailing_service:mailings_list")
+    template_name = "mailing_service/confirm_mailing_completed.html"
+
+    def post(self, request, pk):
+        mailing = get_object_or_404(Mailing, pk=pk)
+
+        if not request.user.has_perm("mailing_service.can_edit_status"):
+            return HttpResponseForbidden(
+                "У вас нет прав для завершения рассылки."
+            )
+
+        mailing.status = "completed"
+        mailing.save()
+
+        return redirect("mailing_service:mailing_detail", pk=pk)

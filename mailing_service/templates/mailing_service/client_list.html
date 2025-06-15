@@ -28,12 +28,14 @@
                                 <a class="btn btn-outline-primary btn-sm"
                                    href="{% url 'mailing_service:client_detail' client.pk %}"
                                    role="button"> Подробнее </a>
+                                {% if user == client.owner %}
                                 <a class="btn btn-outline-secondary btn-sm"
                                    href="{% url 'mailing_service:client_edit' client.pk %}"
                                    role="button"> Редактировать </a>
                                 <a class="btn btn-outline-danger btn-sm"
                                    href="{% url 'mailing_service:client_delete' client.pk %}"
                                    role="button"> Удалить </a>
+                                {% endif %}
 
                             </div>
                         </div>

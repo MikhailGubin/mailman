@@ -14,24 +14,32 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
         fields = ("email", "password1", "password2")
 
 
-class CustomSetPasswordForm(SetPasswordForm):
-    """ Переопределяет форму восстановления пароля """
+class ManagerForm(forms.ModelForm):
+    """ Форма для блокировки Пользователя """
 
-    new_password1 = forms.CharField(
-        label=_("Новый пароль "),
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
-        strip=False,
-        help_text=password_validation.password_validators_help_text_html(),
-    )
-    new_password2 = forms.CharField(
-        label=_("Подтверждение нового пароля "),
-        strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
-    )
+    class Meta:
+        model = User
+        fields = ("is_active",)
+
+
+# class CustomSetPasswordForm(SetPasswordForm):
+#     """ Переопределяет форму восстановления пароля """
+#
+#     new_password1 = forms.CharField(
+#         label=_("Новый пароль "),
+#         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+#         strip=False,
+#         help_text=password_validation.password_validators_help_text_html(),
+#     )
+#     new_password2 = forms.CharField(
+#         label=_("Подтверждение нового пароля "),
+#         strip=False,
+#         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+#     )
 
 
 class UserForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ("email", "phone_number", "avatar", "country",)
