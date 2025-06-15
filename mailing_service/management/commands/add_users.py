@@ -12,7 +12,6 @@ class Command(BaseCommand):
         # Удаляем существующие записи
         User.objects.all().delete()
 
-
         call_command("loaddata", "users_fixture.json")
         self.stdout.write(
             self.style.SUCCESS("Successfully loaded data from users_fixture.json")

@@ -1,14 +1,15 @@
+from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
+from django.utils.translation import gettext_lazy as _
 
 from mixin_form import StyleFormMixin
 from users.models import User
-from django import forms
-from django.utils.translation import gettext_lazy as _
 
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
-    """ Форма для регистрации Пользователя """
+    """Форма для регистрации Пользователя"""
+
     class Meta:
         model = User
         fields = ("email", "password1", "password2")
@@ -34,4 +35,9 @@ class UserForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("email", "phone_number", "avatar", "country",)
+        fields = (
+            "email",
+            "phone_number",
+            "avatar",
+            "country",
+        )

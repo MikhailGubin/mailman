@@ -1,10 +1,12 @@
 import datetime
-from django.db import models
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.mail import send_mail
-from django.views.generic import CreateView, ListView
 from django.core.cache import cache
-from config.settings import EMAIL_HOST_USER, CACHE_ENABLED
+from django.core.mail import send_mail
+from django.db import models
+from django.views.generic import CreateView, ListView
+
+from config.settings import CACHE_ENABLED, EMAIL_HOST_USER
 from mailing_service.models import AttemptMailing
 
 
@@ -38,8 +40,10 @@ class MailingService:
             except Exception as error_text:
                 print(str(error_text))
                 mailing_attempt = AttemptMailing.objects.create(
-                    status="unsuccessfully", server_response=error_text, mailing=mailing,
-                    owner=user
+                    status="unsuccessfully",
+                    server_response=error_text,
+                    mailing=mailing,
+                    owner=user,
                 )
 
                 mailing_attempt.save()
@@ -49,7 +53,7 @@ class MailingService:
 
             # Если рассылка выполнилась удачно, то выполняется следующий код
             mailing_attempt = AttemptMailing.objects.create(
-                status="successfully", mailing=mailing, owner = user
+                status="successfully", mailing=mailing, owner=user
             )
             mailing_attempt.save()
 
@@ -68,7 +72,7 @@ class MailingService:
 
 
 class CustomCreateView(LoginRequiredMixin, CreateView):
-    """Шаблон для создания представления объекта нужного класса """
+    """Шаблон для создания представления объекта нужного класса"""
 
     def form_valid(self, form):
         object = form.save()
@@ -79,7 +83,7 @@ class CustomCreateView(LoginRequiredMixin, CreateView):
 
 
 class CustomListView(ListView):
-    """Класс для представления объектов нужного класса """
+    """Класс для представления объектов нужного класса"""
 
     model = models.Model
 
@@ -90,13 +94,17 @@ class CustomListView(ListView):
         """
         user = self.request.user
         get_queryset = super().get_queryset()
-        permissions = [user.has_perm("mailing_service.can_view_client"),
-                       user.has_perm("mailing_service.can_view_message"),
-                       user.has_perm('mailing_service.can_view_mailing'),
-                       user.has_perm('mailing_service.can_edit_status'),
-                       user.has_perm('mailing_service.can_view_attempt_mailing')]
+        permissions = [
+            user.has_perm("mailing_service.can_view_client"),
+            user.has_perm("mailing_service.can_view_message"),
+            user.has_perm("mailing_service.can_view_mailing"),
+            user.has_perm("mailing_service.can_edit_status"),
+            user.has_perm("mailing_service.can_view_attempt_mailing"),
+        ]
 
         if all(permissions):
             return MailingService.get_from_cache(get_queryset, self.model)
         else:
-            return MailingService.get_from_cache(get_queryset.filter(owner=self.request.user), self.model)
+            return MailingService.get_from_cache(
+                get_queryset.filter(owner=self.request.user), self.model
+            )

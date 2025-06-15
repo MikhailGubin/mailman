@@ -25,6 +25,7 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
         model = Mailing
         exclude = ("finished_at", "status", "owner")
 
+
 #     def clean_clients(self):
 #         clients = self.cleaned_data.get("clients")
 #         created_at = self.cleaned_data.get("created_at")
@@ -34,9 +35,9 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
 #                                f"Нельзя добавлять чужих клиентов в рассылку {created_at}")
 #         return clients
 
-    # def clean_message(self):
-    #     message = self.cleaned_data.get("message")
-    #     if not Mailing.message.owner == Mailing.owner:
-    #         self.add_error("message",
-    #                        f"Нельзя добавлять чужие сообщения в рассылку {Mailing.owner, message.owner}")
-    #     return message Mailing.owner, client
+# def clean_message(self):
+#     message = self.cleaned_data.get("message")
+#     if not Mailing.message.owner == Mailing.owner:
+#         self.add_error("message",
+#                        f"Нельзя добавлять чужие сообщения в рассылку {Mailing.owner, message.owner}")
+#     return message Mailing.owner, client

@@ -1,28 +1,29 @@
 import secrets
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from config.settings import EMAIL_HOST_USER
 
-from .forms import UserRegisterForm, UserForm
+from .forms import UserForm, UserRegisterForm
 from .models import User
-from django.views.generic import DetailView, ListView
-
 
 
 class UserCreateView(CreateView):
-    """ Создание пользователя """
+    """Создание пользователя"""
+
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy("users:login")
 
     def form_valid(self, form):
-        """" Регистрация пользователя """
+        """ " Регистрация пользователя"""
         user = form.save()
         user.is_active = False
         token = secrets.token_hex(16)
@@ -41,7 +42,7 @@ class UserCreateView(CreateView):
 
 
 def email_verification(request, token):
-    """ Подтверждение регистрации пользователя """
+    """Подтверждение регистрации пользователя"""
     user = get_object_or_404(User, token=token)
     user.is_active = True
     user.save()
@@ -58,7 +59,9 @@ class UserListView(ListView):
         """Определяет логику вывода на экран списка Пользователей"""
 
         user = self.request.user
-        if user.has_perm("users.can_edit_is_active") and user.has_perm("users.can_view_user"):
+        if user.has_perm("users.can_edit_is_active") and user.has_perm(
+            "users.can_view_user"
+        ):
             return User.objects.all()
 
         return User.objects.filter(pk=self.request.user.pk)
@@ -100,13 +103,9 @@ class UserBlockView(LoginRequiredMixin, DeleteView):
         user = self.request.user
 
         if not request.user.has_perm("users.can_edit_is_active"):
-            return HttpResponseForbidden(
-                "У вас нет прав для блокировки Пользователя"
-            )
+            return HttpResponseForbidden("У вас нет прав для блокировки Пользователя")
         elif user.pk == user_to_block.pk:
-            return HttpResponseForbidden(
-                "Нельзя себя заблокировать"
-            )
+            return HttpResponseForbidden("Нельзя себя заблокировать")
 
         user_to_block.is_active = False
         user_to_block.save()

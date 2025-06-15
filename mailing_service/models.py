@@ -34,7 +34,10 @@ class Client(models.Model):
         verbose_name = "клиент"
         verbose_name_plural = "клиенты"
         ordering = ["full_name"]
-        permissions = [("can_view_client", "Can view client"),]
+        permissions = [
+            ("can_view_client", "Can view client"),
+        ]
+
 
 class Message(models.Model):
     """Модель 'Сообщение'"""
@@ -64,7 +67,9 @@ class Message(models.Model):
         verbose_name = "сообщение"
         verbose_name_plural = "сообщения"
         ordering = ["title"]
-        permissions = [("can_view_message", "Can view message"), ]
+        permissions = [
+            ("can_view_message", "Can view message"),
+        ]
 
 
 class Mailing(models.Model):
@@ -120,6 +125,7 @@ class Mailing(models.Model):
             ("can_edit_status", "Can edit status"),
         ]
 
+
 class AttemptMailing(models.Model):
     """Модель 'Попытка рассылки'"""
 
@@ -158,7 +164,9 @@ class AttemptMailing(models.Model):
         verbose_name = "попытка рассылки"
         verbose_name_plural = "попытки рассылки"
         ordering = ["created_at", "mailing", "status", "server_response"]
-        permissions = [("can_view_attempt_mailing", "Can view attempt mailing"), ]
+        permissions = [
+            ("can_view_attempt_mailing", "Can view attempt mailing"),
+        ]
 
     def __str__(self):
         return f"Рассылка запущена {self.created_at} автором - {self.owner}. Статус -  {self.status}."

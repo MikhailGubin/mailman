@@ -7,7 +7,8 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from mailing_service.forms import ClientForm, MailingForm, MessageForm
 from mailing_service.models import AttemptMailing, Client, Mailing, Message
-from mailing_service.services import MailingService, CustomCreateView, CustomListView
+from mailing_service.services import (CustomCreateView, CustomListView,
+                                      MailingService)
 
 
 class IndexView(ListView):
@@ -22,7 +23,11 @@ class IndexView(ListView):
         context.update(
             {
                 "clients": Client.objects.all(),
-                "launched_mailings": [mailing for mailing in  Mailing.objects.all() if mailing.status == "launched"],
+                "launched_mailings": [
+                    mailing
+                    for mailing in Mailing.objects.all()
+                    if mailing.status == "launched"
+                ],
                 "mailings": Mailing.objects.all(),
             }
         )
@@ -176,19 +181,28 @@ class AttemptMailingListView(CustomListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        if user.has_perm('mailing_service.can_view_attempt_mailing'):
+        if user.has_perm("mailing_service.can_view_attempt_mailing"):
             attempts_list = AttemptMailing.objects.all()
         else:
-            attempts_list = [attempt for attempt in AttemptMailing.objects.all()
-                             if attempt.owner == user]
+            attempts_list = [
+                attempt
+                for attempt in AttemptMailing.objects.all()
+                if attempt.owner == user
+            ]
 
         context.update(
             {
                 "attempts_list": attempts_list,
-                "successfully_attempts": [attempt for attempt in attempts_list
-                                          if attempt.status == "successfully"],
-                "unsuccessfully_attempts": [attempt for attempt in attempts_list
-                                          if attempt.status == "unsuccessfully"],
+                "successfully_attempts": [
+                    attempt
+                    for attempt in attempts_list
+                    if attempt.status == "successfully"
+                ],
+                "unsuccessfully_attempts": [
+                    attempt
+                    for attempt in attempts_list
+                    if attempt.status == "unsuccessfully"
+                ],
             }
         )
         return context
@@ -211,9 +225,7 @@ class MailingCompletedView(LoginRequiredMixin, DeleteView):
         mailing = get_object_or_404(Mailing, pk=pk)
 
         if not request.user.has_perm("mailing_service.can_edit_status"):
-            return HttpResponseForbidden(
-                "У вас нет прав для завершения рассылки."
-            )
+            return HttpResponseForbidden("У вас нет прав для завершения рассылки.")
 
         mailing.status = "completed"
         mailing.save()
