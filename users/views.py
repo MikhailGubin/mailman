@@ -1,7 +1,6 @@
 import secrets
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
@@ -81,17 +80,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserForm
     success_url = reverse_lazy("users:users_list")
 
-    # def get_form_class(self):
-    #     """ Определяет права доступа для редактирования профиля Пользователя """
-    #     user = self.request.user
-    #     user_profile = self.object
-    #     if user_profile.pk == user.pk:
-    #         return UserForm
-    #     elif user.has_perm("users.can_edit_is_active") and user.has_perm("users.can_view_user"):
-    #         return ManagerForm
-    #
-    #     raise PermissionDenied
-
 
 class UserBlockView(LoginRequiredMixin, DeleteView):
     model = User
@@ -111,8 +99,3 @@ class UserBlockView(LoginRequiredMixin, DeleteView):
         user_to_block.save()
 
         return redirect("users:users_list")
-
-
-# class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-#     """ Подтверждение нового пароля """
-#     form_class = CustomSetPasswordForm

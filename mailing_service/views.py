@@ -3,7 +3,7 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import DeleteView, UpdateView
 
 from mailing_service.forms import ClientForm, MailingForm, MessageForm
 from mailing_service.models import AttemptMailing, Client, Mailing, Message
