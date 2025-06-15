@@ -5,6 +5,8 @@ from django.core.mail import send_mail
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -48,6 +50,7 @@ def email_verification(request, token):
     return redirect(reverse("users:login"))
 
 
+@method_decorator(cache_page(60 * 1), name="dispatch")
 class UserListView(ListView):
     """Класс для представления объектов класса 'Пользователь'"""
 

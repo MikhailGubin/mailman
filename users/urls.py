@@ -6,6 +6,7 @@ from django.contrib.auth.views import (LoginView, LogoutView,
                                        PasswordResetDoneView,
                                        PasswordResetView)
 from django.urls import path, reverse_lazy
+from django.views.decorators.cache import cache_page
 
 from users.apps import UsersConfig
 from users.views import (UserBlockView, UserCreateView, UserDetailView,
@@ -19,7 +20,7 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),
     path("register/", UserCreateView.as_view(), name="register"),
     path("", UserListView.as_view(), name="users_list"),
-    path("<int:pk>/", UserDetailView.as_view(), name="user_detail"),
+    path("<int:pk>/", cache_page(60)(UserDetailView.as_view()), name="user_detail"),
     path("<int:pk>/edit/", UserUpdateView.as_view(), name="user_edit"),
     path("<int:pk>/user_block/", UserBlockView.as_view(), name="user_block"),
     path("email-confirm/<str:token>/", email_verification, name="email-confirm"),
