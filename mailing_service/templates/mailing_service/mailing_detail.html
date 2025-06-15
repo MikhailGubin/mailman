@@ -1,0 +1,54 @@
+{% extends 'mailing_service/base.html' %}
+
+{% block title %}Детали рассылки{% endblock %}
+
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card shadow-sm">                    
+                    <div class="card-body">
+                        <p class="card-text">Дата создания рассылки: {{mailing.created_at|date:"H:i:s d M Y"}}</p>
+                        <p class="card-text">Автор рассылки: {{mailing.owner}}</p>
+                        <p class="card-text">Статус рассылки: {{mailing.get_status_display}}</p>
+                        <p class="card-text">Заголовок сообщения: {{mailing.message}}</p>
+                        <p class="card-text">Клиенты, которым отправлена рассылка:</p>
+                        <ul class="list-unstyled">
+                            {% for client in mailing.clients.all %}
+                                <li>* {{client}}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="{% url 'mailing_service:mailings_list' %}"
+                                   role="button"> Назад </a>
+                                {% if user == mailing.owner %}
+                                <a class="btn btn-outline-secondary btn-sm"
+                                   href="{% url 'mailing_service:mailing_edit' mailing.pk %}"
+                                   role="button"> Редактировать </a>
+                                <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'mailing_service:mailing_delete' mailing.pk %}"
+                                   role="button"> Удалить </a>
+                                {% endif %}
+                                {% if perms.mailing_service.can_edit_status %}
+                                    <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'mailing_service:mailing_completed' mailing.pk %}"
+                                   role="button"> Отключить </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <a class="btn btn-outline-primary btn-sm"
+               href="{% url 'mailing_service:send_message' mailing.pk %}"
+               role="button"> Начать рассылку клиентам </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,10 +1,7 @@
 import os
 from pathlib import Path
 
-from django.conf.global_settings import (AUTH_USER_MODEL, LOGIN_REDIRECT_URL,
-                                         LOGOUT_REDIRECT_URL)
 from dotenv import load_dotenv
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "mailing_service",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -123,31 +121,31 @@ STATICFILES_DIRS = (BASE_DIR / "static",)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# MEDIA_URL = "/media/"
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-#
-# AUTH_USER_MODEL = "users.User"
-#
-# LOGIN_REDIRECT_URL = "/"
-# LOGOUT_REDIRECT_URL = "/"
-#
-# EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
-# EMAIL_HOST = os.getenv("EMAIL_HOST")
-# EMAIL_PORT = os.getenv("EMAIL_PORT")
-# EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", False) == "True"
-# EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", False) == "True"
-# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-#
-# SERVER_EMAIL = EMAIL_HOST_USER
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-#
-# CACHE_ENABLED = os.getenv("CACHE_ENABLED", False) == "True"
-#
-# if CACHE_ENABLED:
-#     CACHES = {
-#         "default": {
-#             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-#             "LOCATION": os.getenv("REDIS_HOST"),
-#         }
-#     }
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+AUTH_USER_MODEL = "users.User"
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", False) == "True"
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", False) == "True"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CACHE_ENABLED = os.getenv("CACHE_ENABLED", False) == "True"
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv("REDIS_HOST"),
+        }
+    }
