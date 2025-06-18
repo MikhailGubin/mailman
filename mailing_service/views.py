@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import DeleteView, UpdateView
+from django.views.generic.edit import DeleteView, UpdateView, CreateView
 
 from mailing_service.forms import ClientForm, MailingForm, MessageForm
 from mailing_service.models import AttemptMailing, Client, Mailing, Message
@@ -139,6 +139,11 @@ class MailingCreateView(CustomCreateView):
     form_class = MailingForm
     success_url = reverse_lazy("mailing_service:mailings_list")
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
     """Создаёт представление объекта класса 'Рассылка'"""
@@ -150,6 +155,12 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         """Перенаправляет пользователя на просмотр этой рассылки после успешного редактирования записи"""
         return reverse("mailing_service:mailing_detail", args=[self.kwargs.get("pk")])
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):

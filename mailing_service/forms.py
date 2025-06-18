@@ -20,6 +20,14 @@ class MessageForm(StyleFormMixin, forms.ModelForm):
 
 class MailingForm(StyleFormMixin, forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Извлекаем пользователя из kwargs
+        super(MailingForm, self).__init__(*args, **kwargs)
+        if self.user and "owner" not in self.fields:
+            self.instance.owner = self.user
+            self.fields['clients'].queryset = Client.objects.filter(owner=self.user)
+            self.fields['message'].queryset = Message.objects.filter(owner=self.user)
+
     class Meta:
         model = Mailing
         exclude = ("finished_at", "status", "owner")
