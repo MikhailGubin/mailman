@@ -1,0 +1,20 @@
+{% extends 'mailing_service/base.html' %}
+{% load unique_count %}<!-- Загрузка пользовательского фильтра -->
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form class="row" method="post" enctype="multipart/form-data" action="">
+                <div class="card">
+                    <h3 class="fw-light">Общее количество рассылок: {{mailings | length}}</h3>
+                    <h3 class="fw-light">Общее количество активных рассылок: {{launched_mailings | length}}</h3>
+                    <h3 class="fw-light">Общее количество уникальных получателей: {{clients | unique_count}}</h3>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
