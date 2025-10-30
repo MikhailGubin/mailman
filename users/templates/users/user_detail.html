@@ -1,0 +1,42 @@
+{% extends 'mailing_service/base.html' %}
+{% load users_tags %}
+
+{% block title %}Информация о клиенте{% endblock %}
+
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{ user_profile.avatar | media_filter }}" height="275" width="100%">
+                    <div class="card-body">
+                        <p class="card-text">Почта: {{user_profile.email}}</p>
+                        <p class="card-text">Телефон: {{user_profile.phone_number}}</p>
+                        <p class="card-text">Страна: {{user_profile.country}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="{% url 'users:users_list' %}"
+                                   role="button"> Назад </a>
+
+                                    {% if user_profile.pk == user.pk %}
+                                    <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'users:user_edit' user_profile.pk %}"
+                                   role="button">Редактировать</a>
+                                    {% elif perms.users.can_edit_is_active and perms.users.can_view_user %}
+                                    <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'users:user_block' user_profile.pk %}"
+                                   role="button">Заблокировать</a>
+                                    {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

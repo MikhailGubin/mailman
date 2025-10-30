@@ -1,0 +1,42 @@
+[
+{
+    "model": "mailing_service.client",
+    "pk": 4,
+    "fields": {
+        "email": "ivanov@test.ru",
+        "full_name": "Иванов Иван Иванович",
+        "comment": "Специалист фирмы ООО \"Стерео Звук\"",
+        "owner": 7
+    }
+},
+{
+    "model": "mailing_service.client",
+    "pk": 5,
+    "fields": {
+        "email": "petrov@test.ru",
+        "full_name": "Петров Петр Петрович",
+        "comment": "Инженер фирмы ООО \"Золотой Айфон\"",
+        "owner": 7
+    }
+},
+{
+    "model": "mailing_service.client",
+    "pk": 7,
+    "fields": {
+        "email": "mikhail-gubin26@ramb",
+        "full_name": "Губин Михаил",
+        "comment": "Инженер фирмы ООО \"Digital Master\"",
+        "owner": 2
+    }
+},
+{
+    "model": "mailing_service.client",
+    "pk": 8,
+    "fields": {
+        "email": "MVGubin1323@yandex.ru",
+        "full_name": "Губин Михаил Владимирович",
+        "comment": "Специалист фирмы ООО \"Digital Master\"",
+        "owner": 7
+    }
+}
+]
